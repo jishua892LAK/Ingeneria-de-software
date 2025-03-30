@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velay Music - Asistente AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background-color: #121212;
+      color: white;
+      display: flex;
+      height: 100vh;
+	  font-family: 'Montserrat', sans-serif;
+    }
+    
+    .sidebar {
+      width: 250px;
+      background-color: #000;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .logo {
+      color: #ff0000;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+    
+    .menu-section {
+      margin-bottom: 30px;
+    }
+    
+    .menu-title {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      color: #b3b3b3;
+      text-decoration: none;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+    
+    .menu-item:hover {
+      color: white;
+    }
+    
+    .menu-item i {
+      margin-right: 10px;
+    }
+    
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .search-bar {
+      background-color: #fff;
+      border-radius: 30px;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+    
+    .chat-container {
+      flex: 1;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    
+    .chat-header {
+      padding: 20px;
+      border-bottom: 1px solid #333;
+      display: flex;
+      align-items: center;
+    }
+    
+    .ai-icon {
+      width: 40px;
+      height: 40px;
+      background-color: #ff0000;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 15px;
+    }
+    
+    .ai-title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    
+    .ai-subtitle {
+      font-size: 12px;
+      color: #b3b3b3;
+      margin-top: 3px;
+    }
+    
+    .chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .message {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      line-height: 1.4;
+    }
+    
+    .bot-message {
+      background-color: #292929;
+      border-top-left-radius: 4px;
+      align-self: flex-start;
+    }
+    
+    .user-message {
+      background-color: #ff0000;
+      border-top-right-radius: 4px;
+      align-self: flex-end;
+    }
+    
+    .welcome-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 30px;
+      background-color: #252525;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .welcome-icon {
+      font-size: 40px;
+      margin-bottom: 15px;
+      background: linear-gradient(45deg, #ff0000, #ff8c00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .welcome-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .welcome-text {
+      color: #b3b3b3;
+      margin-bottom: 20px;
+      max-width: 500px;
+    }
+    
+    .suggestion-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 5px;
+    }
+    
+    .suggestion-card {
+      background-color: #333;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    
+    .suggestion-card:hover {
+      background-color: #444;
+    }
+    
+    .playlist-preview {
+      display: flex;
+      gap: 15px;
+      padding: 15px;
+      background-color: #252525;
+      border-radius: 12px;
+      margin-top: 10px;
+      overflow-x: auto;
+    }
+    
+    .preview-card {
+      min-width: 140px;
+      background-color: #333;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+    
+    .preview-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .preview-image {
+      height: 140px;
+      background: linear-gradient(45deg, #333, #444);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+    }
+    
+    .preview-info {
+      padding: 10px;
+    }
+    
+    .preview-title {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .preview-artist {
+      font-size: 12px;
+      color: #b3b3b3;
+    }
+    
+    .chat-input {
+      display: flex;
+      padding: 15px 20px;
+      border-top: 1px solid #333;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .input-field {
+      flex: 1;
+      background-color: #333;
+      border: none;
+      border-radius: 24px;
+      padding: 12px 20px;
+      color: white;
+      font-size: 15px;
+    }
+    
+    .input-field::placeholder {
+      color: #999;
+    }
+    
+    .send-button {
+      width: 40px;
+      height: 40px;
+      background-color: #ff0000;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      cursor: pointer;
+    }
+    
+    .right-sidebar {
+      width: 250px;
+      background-color: #000;
+      padding: 20px;
+    }
+    
+    .right-title {
+      color: #ff0000;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .playlist {
+      margin-bottom: 25px;
+      color: #b3b3b3;
+      cursor: pointer;
+    }
+    
+    .playlist:hover {
+      color: white;
+    }
+    
+    .mood-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    
+    .mood-tag {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <div class="logo">Velay music</div>
+    
+    <div class="menu-section">
+      <div class="menu-item">
+        <i>🏠</i> Inicio
+      </div>
+      <div class="menu-item">
+        <i>🔍</i> Buscar
+      </div>
+      <div class="menu-item">
+        <i>📚</i> Tu biblioteca
+      </div>
+    </div>
+    
+    <div class="menu-section">
+      <div class="menu-title">Tu música</div>
+      <div class="menu-item">
+        <i>❤️</i> Tus me gusta
+      </div>
+      <div class="menu-item">
+        <i>🎵</i> Mix diario
+      </div>
+      <div class="menu-item">
+        <i>🔥</i> Éxitos del momento
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="search-bar">¿Qué quieres reproducir?</div>
+    
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="ai-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="ai-title">Velay AI</div>
+          <div class="ai-subtitle">Tu asistente musical personalizado</div>
+        </div>
+      </div>
+      
+      <div class="chat-messages">
+        <div class="welcome-message">
+          <div class="welcome-icon">🎵</div>
+          <div class="welcome-title">¡Hola! Soy tu asistente musical</div>
+          <div class="welcome-text">Puedo recomendarte canciones, crear playlists personalizadas según tu estado de ánimo, artistas favoritos o cualquier género que prefieras.</div>
+          
+          <div class="suggestion-cards">
+            <div class="suggestion-card">"Recomiéndame música para entrenar"</div>
+            <div class="suggestion-card">"Canciones para un día triste"</div>
+            <div class="suggestion-card">"Playlist al estilo de Coldplay"</div>
+            <div class="suggestion-card">"Rock clásico de los 80s"</div>
+          </div>
+        </div>
+        
+        <div class="message user-message">Necesito música para concentrarme mientras trabajo</div>
+        
+        <div class="message bot-message">
+          ¡Claro! Te recomiendo estas canciones lo-fi y ambient que son perfectas para mantener la concentración mientras trabajas:
+          
+          <div class="playlist-preview">
+            <div class="preview-card">
+              <div class="preview-image">🎧</div>
+              <div class="preview-info">
+                <div class="preview-title">Lo-Fi Focus</div>
+                <div class="preview-artist">Playlist • 3h 40m</div>
+              </div>
+            </div>
+            
+            <div class="preview-card">
+              <div class="preview-image">🧠</div>
+              <div class="preview-info">
+                <div class="preview-title">Deep Focus</div>
+                <div class="preview-artist">Playlist • 2h 15m</div>
+              </div>
+            </div>
+            
+            <div class="preview-card">
+              <div class="preview-image">✨</div>
+              <div class="preview-info">
+                <div class="preview-title">Ambient Study</div>
+                <div class="preview-artist">Playlist • 4h 05m</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mood-tags">
+            <div class="mood-tag">Concentración</div>
+            <div class="mood-tag">Trabajo</div>
+            <div class="mood-tag">Lo-Fi</div>
+            <div class="mood-tag">Ambient</div>
+          </div>
+        </div>
+        
+        <div class="message user-message">Quiero música que suene como The Weeknd</div>
+        
+        <div class="message bot-message">
+          Entendido. He creado una selección de canciones con vibes similares a The Weeknd, con R&B alternativo y pop oscuro:
+          
+          <div class="playlist-preview">
+            <div class="preview-card">
+              <div class="preview-image">🌙</div>
+              <div class="preview-info">
+                <div class="preview-title">After Hours Vibes</div>
+                <div class="preview-artist">Playlist • 1h 45m</div>
+              </div>
+            </div>
+            
+            <div class="preview-card">
+              <div class="preview-image">🖤</div>
+              <div class="preview-info">
+                <div class="preview-title">Dark R&B Mix</div>
+                <div class="preview-artist">Playlist • 2h 20m</div>
+              </div>
+            </div>
+            
+            <div class="preview-card">
+              <div class="preview-image">🔮</div>
+              <div class="preview-info">
+                <div class="preview-title">Synthwave Night</div>
+                <div class="preview-artist">Playlist • 1h 30m</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mood-tags">
+            <div class="mood-tag">R&B Alternativo</div>
+            <div class="mood-tag">Synthwave</div>
+            <div class="mood-tag">Pop Oscuro</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="chat-input">
+        <input type="text" class="input-field" placeholder="Pregúntame sobre cualquier música o estado de ánimo...">
+        <button class="send-button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Right Sidebar -->
+  <div class="right-sidebar">
+    <div class="right-title">Recomendado para ti</div>
+    
+    <div class="playlist">Mix Favorito</div>
+    <div class="playlist">Tus me gusta</div>
+    <div class="playlist">Pop Hits</div>
+  </div>
+</body>
+</html>

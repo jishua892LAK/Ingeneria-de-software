@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velay Music - Karaoke</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+  
+  /* Controles de volumen */
+.volume-controls {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.slider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.slider input {
+    width: 150px;
+    appearance: none;
+    background: #d40000;
+    height: 5px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.slider input::-webkit-slider-thumb {
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      
+    }
+    
+    body {
+      background-color: #121212;
+      color: white;
+      display: flex;
+      height: 100vh;
+	  font-family: 'Montserrat', sans-serif;
+    }
+    
+    .sidebar {
+      width: 250px;
+      background-color: #000;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .logo {
+      color: #ff0000;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+    
+    .menu-section {
+      margin-bottom: 30px;
+    }
+    
+    .menu-title {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      color: #b3b3b3;
+      text-decoration: none;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+    
+    .menu-item:hover {
+      color: white;
+    }
+    
+    .menu-item i {
+      margin-right: 10px;
+    }
+    
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .search-bar {
+      background-color: #fff;
+      border-radius: 30px;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+    
+    .player-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    
+    .karaoke-container {
+      width: 80%;
+      max-width: 600px;
+      text-align: center;
+    }
+    
+    .song-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      color: #fff;
+    }
+    
+    .lyrics-container {
+      position: relative;
+      font-size: 28px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .lyrics-line {
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .lyrics-text {
+      color: #999;
+    }
+    
+    .highlight {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .highlight::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      color: #ff0000;
+      overflow: hidden;
+      white-space: nowrap;
+      animation: karaoke 4s linear forwards;
+    }
+    
+    .active-line {
+      color: #fff;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background-color: #333;
+      border-radius: 2px;
+      margin-top: 30px;
+      position: relative;
+    }
+    
+    .progress {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background-color: #ff0000;
+      border-radius: 2px;
+      width: 35%;
+    }
+    
+    .right-sidebar {
+      width: 250px;
+      background-color: #000;
+      padding: 20px;
+    }
+    
+    .right-title {
+      color: #ff0000;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .playlist {
+      margin-bottom: 25px;
+      color: #b3b3b3;
+      cursor: pointer;
+    }
+    
+    .playlist:hover {
+      color: white;
+    }
+    
+    @keyframes karaoke {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+    
+    .next-line {
+      margin-top: 20px;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <div class="logo">Velay music</div>
+    
+    <div class="menu-section">
+      <div class="menu-item">
+        <i>🏠</i> Inicio
+      </div>
+      <div class="menu-item">
+        <i>🔍</i> Buscar
+      </div>
+      <div class="menu-item">
+        <i>📚</i> Tu biblioteca
+      </div>
+    </div>
+    
+    <div class="menu-section">
+      <div class="menu-title">Tu música</div>
+      <div class="menu-item">
+        <i>❤️</i> Tus me gusta
+      </div>
+      <div class="menu-item">
+        <i>🎵</i> Mix diario
+      </div>
+      <div class="menu-item">
+        <i>🔥</i> Éxitos del momento
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="search-bar">¿Qué quieres reproducir?</div>
+    
+    <div class="player-container">
+      <div class="karaoke-container">
+        <div class="song-title">Dancing in the Moonlight</div>
+        
+        <div class="lyrics-container">
+          <div class="lyrics-line active-line">
+            <span class="highlight" data-text="We get it on most every night">We get it on most every night</span>
+          </div>
+          
+          <div class="lyrics-line next-line">
+            <span class="lyrics-text">When that moon is big and bright</span>
+          </div>
+          
+          <div class="lyrics-line next-line">
+            <span class="lyrics-text">It's a supernatural delight</span>
+          </div>
+        </div>
+        
+        <div class="progress-bar">
+          <div class="progress"></div>
+        </div>
+      </div>
+    </div>
+	<!-- Controles de volumen -->
+            <div class="volume-controls">
+                <div class="slider">
+                    <label>🎤 Volumen de voz</label>
+                    <input type="range" min="0" max="100" value="50">
+                </div>
+                <div class="slider">
+                    <label>🎼 Volumen de base</label>
+                    <input type="range" min="0" max="100" value="50">
+                </div>
+            </div>
+        </div>
+  </div>
+  
+  <!-- Right Sidebar -->
+  <div class="right-sidebar">
+    <div class="right-title">Recomendado para ti</div>
+    
+    <div class="playlist">Mix Favorito</div>
+    <div class="playlist">Tus me gusta</div>
+    <div class="playlist">Pop Hits</div>
+  </div>
+</body>
+</html>

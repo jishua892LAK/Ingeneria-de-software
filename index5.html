@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Velay Music - Asistente de Voz</title>
+	<link rel="stylesheet" href="styles3.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+   body {
+      background-color: #121212;
+      color: white;
+      display: flex;
+      height: 100vh;
+	  font-family: 'Montserrat', sans-serif;
+    }
+    
+    .sidebar {
+      width: 250px;
+      background-color: #000;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .logo {
+      color: #ff0000;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+    
+    .menu-section {
+      margin-bottom: 30px;
+    }
+    
+    .menu-title {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+    
+    .menu-item {
+      display: flex;
+      align-items: center;
+      color: #b3b3b3;
+      text-decoration: none;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+    
+    .menu-item:hover {
+      color: white;
+    }
+    
+    .menu-item i {
+      margin-right: 10px;
+    }
+    
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .search-bar {
+      background-color: #fff;
+      border-radius: 30px;
+      padding: 10px 20px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+    
+    .player-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    
+    .voice-assistant {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .voice-circle {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: rgba(255, 0, 0, 0.2);
+      animation: pulse 2s infinite;
+    }
+    
+    .voice-circle:before {
+      content: '';
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: rgba(255, 0, 0, 0.3);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .voice-core {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #ff0000, #cc0000);
+      box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+    }
+    
+    .voice-icon {
+      color: white;
+      font-size: 32px;
+    }
+    
+    .voice-waves {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 0, 0, 0.1);
+      animation: expand 2s infinite;
+    }
+    
+    .voice-waves:before {
+      content: '';
+      position: absolute;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 0, 0, 0.1);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: expand 2s infinite 0.4s;
+    }
+    
+    .listening-text {
+      margin-top: 40px;
+      font-size: 24px;
+      color: #fff;
+      opacity: 0.8;
+    }
+    
+    .right-sidebar {
+      width: 250px;
+      background-color: #000;
+      padding: 20px;
+    }
+    
+    .right-title {
+      color: #ff0000;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .playlist {
+      margin-bottom: 25px;
+      color: #b3b3b3;
+      cursor: pointer;
+    }
+    
+    .playlist:hover {
+      color: white;
+    }
+    
+    @keyframes pulse {
+      0% {
+        transform: scale(0.95);
+        opacity: 0.7;
+      }
+      50% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0.95);
+        opacity: 0.7;
+      }
+    }
+    
+    @keyframes expand {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.7;
+      }
+      50% {
+        transform: scale(1);
+        opacity: 0.3;
+      }
+      100% {
+        transform: scale(0.8);
+        opacity: 0.7;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <div class="logo">Velay IA</div>
+    
+    <div class="menu-section">
+      <div class="menu-item">
+        <i>🏠</i> Inicio
+      </div>
+      <div class="menu-item">
+        <i>🔍</i> Buscar
+      </div>
+      <div class="menu-item">
+        <i>📚</i> Tu biblioteca
+      </div>
+    </div>
+    
+    <div class="menu-section">
+      <div class="menu-title">Tu música</div>
+      <div class="menu-item">
+        <i>❤️</i> Tus me gusta
+      </div>
+      <div class="menu-item">
+        <i>🎵</i> Mix diario
+      </div>
+      <div class="menu-item">
+        <i>🔥</i> Éxitos del momento
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="search-bar">¿Qué quieres reproducir?</div>
+    
+    <div class="player-container">
+      <div class="voice-assistant">
+        <div class="voice-waves"></div>
+        <div class="voice-circle"></div>
+        <div class="voice-core">
+          <div class="voice-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" y1="19" x2="12" y2="23"></line>
+              <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="listening-text">Te escucho...</div>
+    </div>
+  </div>
+  
+  <!-- Right Sidebar -->
+  <div class="right-sidebar">
+    <div class="right-title">Recomendado para ti</div>
+    
+    <div class="playlist">Mix Favorito</div>
+    <div class="playlist">Tus me gusta</div>
+    <div class="playlist">Pop Hits</div>
+  </div>
+</body>
+</html>
